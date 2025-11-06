@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/LanaAntonova/go-sprint6-http/handlers"
+	"github.com/LanaAntonova/go-sprint6-http/internal/handlers"
 )
 
 type Server struct {
