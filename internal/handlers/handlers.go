@@ -29,8 +29,13 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Парсим форму (до 10 МБ)
+	r.Body = http.MaxBytesReader(w, r.Body, 10<<20)
 	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
+		if err == http.ErrContentLength {
+			http.Error(w, "Файл слишком большой (макс. 10 МБ)", http.StatusRequestEntityTooLarge)
+			return
+		}
 		log.Printf("Ошибка парсинга формы: %v", err)
 		http.Error(w, "Ошибка парсинга формы", http.StatusInternalServerError)
 		return
@@ -65,8 +70,10 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Генерим имя выходного файла
 	ext := filepath.Ext(handler.Filename)
-	timestamp := time.Now().UTC().Format("2006-01-02-15-04-05")
-	outputFilename := fmt.Sprintf("%s%s", timestamp, ext)
+	if ext == "" {
+		ext = ".txt"
+	}
+	outputFilename := time.Now().UTC().Format("2006-01-02-15-04-05") + ext
 
 	// Записываем в локальный файл
 	err = os.WriteFile(outputFilename, []byte(result), 0644)
@@ -78,5 +85,6 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Ответ клиенту
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	fmt.Fprintf(w, "Результат сохранён в: %s\n\n---\n%s", outputFilename, result)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, result)
 }
