@@ -4,7 +4,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/LanaAntonova/go-sprint6-http/pkg/morse"
+	"github.com/Yandex-Practicum/go1fl-sprint6-final/pkg/morse"
 )
 
 // isMorse проверяет, похожа ли строка на код Морзе

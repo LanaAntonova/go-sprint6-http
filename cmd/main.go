@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/LanaAntonova/go-sprint6-http/internal/server"
+	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/server"
 )
 
 func main() {

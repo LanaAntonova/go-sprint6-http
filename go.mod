@@ -1,3 +1,3 @@
-module github.com/LanaAntonova/go-sprint6-http
+module github.com/Yandex-Practicum/go1fl-sprint6-final
 
 go 1.24.0

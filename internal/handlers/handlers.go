@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/LanaAntonova/go-sprint6-http/internal/service"
+	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
 )
 
 // HomeHandler — отдаёт index.html
